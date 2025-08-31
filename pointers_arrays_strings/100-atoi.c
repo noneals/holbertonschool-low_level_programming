@@ -2,7 +2,7 @@
 
 /**
  * _atoi - converts a string to an integer
- * @s: string to be converted
+ * @s: the string to convert
  *
  * Return: the converted integer
  */
@@ -12,7 +12,7 @@ int _atoi(char *s)
 	int sign = 1;
 	int result = 0;
 
-	/* Skip non-digit characters and check signs */
+	/* Skip non-digit characters and handle signs */
 	while (s[i] != '\0' && (s[i] < '0' || s[i] > '9'))
 	{
 		if (s[i] == '-')
@@ -24,16 +24,16 @@ int _atoi(char *s)
 		i++;
 	}
 
-	/* Build number as negative to avoid overflow */
+	/* Build number as negative to safely handle INT_MIN */
 	while (s[i] >= '0' && s[i] <= '9')
 	{
 		int digit = s[i] - '0';
 
-		result = result * 10 - digit; /* keep result negative */
+		result = result * 10 - digit; /* keep negative to avoid overflow */
 		i++;
 	}
 
-	/* Flip result if sign is positive */
+	/* If sign is positive, flip result */
 	if (sign == 1)
 		return (-result);
 
