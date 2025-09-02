@@ -1,4 +1,4 @@
-#include "main.h"
+`#include "main.h"
 
 /**
  * _strncpy - copies a string
@@ -6,7 +6,8 @@
  * @src: source string
  * @n: maximum number of bytes to copy
  *
- * Description: Works exactly like strncpy from the C standard library.
+ * Description: Custom implementation of the strncpy behavior
+ *              from the C standard library.
  *
  * Return: pointer to dest
  */
