@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 50881b9a14dbb999530c0a082e5fa1fbc7d0a947
 /**
  * _strncpy - copies a string
  * @dest: buffer where we copy the string
