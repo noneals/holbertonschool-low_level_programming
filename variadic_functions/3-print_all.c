@@ -13,6 +13,7 @@ void print_all(const char * const format, ...)
 	va_list args;
 	unsigned int i = 0;
 	char *sep = "";
+	char *str;
 
 	va_start(args, format);
 
@@ -29,7 +30,7 @@ void print_all(const char * const format, ...)
 				printf("%s%f", sep, va_arg(args, double));
 			if (format[i] == 's')
 			{
-				char *str = va_arg(args, char *);
+				str = va_arg(args, char *);
 				if (!str)
 					str = "(nil)";
 				printf("%s%s", sep, str);
