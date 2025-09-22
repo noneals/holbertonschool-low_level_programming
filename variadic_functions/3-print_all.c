@@ -3,11 +3,6 @@
 #include <stdio.h>
 
 /**
- * print_all - prints anything#include "variadic_functions.h"
-#include <stdarg.h>
-#include <stdio.h>
-
-/**
  * print_all - prints anything
  * @format: list of types of arguments passed to the function
  *
@@ -17,78 +12,39 @@ void print_all(const char * const format, ...)
 {
 	va_list args;
 	unsigned int i = 0;
-	char *str, *sep = "";
+	char *str;
+	char *sep = "";
 
 	va_start(args, format);
 
 	while (format && format[i])
 	{
-		switch (format[i])
+		if (format[i] == 'c')
 		{
-		case 'c':
 			printf("%s%c", sep, va_arg(args, int));
-			break;
-		case 'i':
+			sep = ", ";
+		}
+		if (format[i] == 'i')
+		{
 			printf("%s%d", sep, va_arg(args, int));
-			break;
-		case 'f':
+			sep = ", ";
+		}
+		if (format[i] == 'f')
+		{
 			printf("%s%f", sep, va_arg(args, double));
-			break;
-		case 's':
+			sep = ", ";
+		}
+		if (format[i] == 's')
+		{
 			str = va_arg(args, char *);
-			if (str == NULL)
+			if (!str)
 				str = "(nil)";
 			printf("%s%s", sep, str);
-			break;
-		}
-		if (format[i] == 'c' || format[i] == 'i' ||
-		    format[i] == 'f' || format[i] == 's')
 			sep = ", ";
+		}
 		i++;
 	}
 
 	va_end(args);
 	printf("\n");
-}
-
- * @format: list of types of arguments passed to the function
- *
- * Return: void
- */
-void print_all(const char * const format, ...)
-{
-    va_list args;
-    unsigned int i = 0;
-    char *str, *sep = "";
-
-    va_start(args, format);
-
-    while (format && format[i])
-    {
-        switch (format[i])
-        {
-            case 'c':
-                printf("%s%c", sep, va_arg(args, int));
-                break;
-            case 'i':
-                printf("%s%d", sep, va_arg(args, int));
-                break;
-            case 'f':
-                printf("%s%f", sep, va_arg(args, double));
-                break;
-            case 's':
-                str = va_arg(args, char *);
-                if (str == NULL)
-                    str = "(nil)";
-                printf("%s%s", sep, str);
-                break;
-        }
-        if (format[i] == 'c' || format[i] == 'i' ||
-            format[i] == 'f' || format[i] == 's')
-            sep = ", ";
-        i++;
-    }
-
-    va_end(args);
-    printf("\n");
 }
