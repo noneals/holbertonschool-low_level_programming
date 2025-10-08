@@ -1,4 +1,4 @@
-#include <stdlib.h>  /* <-- Add this include */
+#include <stdlib.h>
 #include "lists.h"
 
 /**
@@ -10,41 +10,41 @@
  */
 int delete_dnodeint_at_index(dlistint_t **head, unsigned int index)
 {
-    dlistint_t *tmp;
-    unsigned int i = 0;
+	dlistint_t *tmp;
+	unsigned int i = 0;
 
-    if (head == NULL || *head == NULL)
-        return (-1);
+	if (head == NULL || *head == NULL)
+		return (-1);
 
-    tmp = *head;
+	tmp = *head;
 
-    /* Delete head node */
-    if (index == 0)
-    {
-        *head = tmp->next;
-        if (*head != NULL)
-            (*head)->prev = NULL;
-        free(tmp);
-        return (1);
-    }
+	/* Delete head node */
+	if (index == 0)
+	{
+		*head = tmp->next;
+		if (*head != NULL)
+			(*head)->prev = NULL;
+		free(tmp);
+		return (1);
+	}
 
-    /* Traverse to node at index */
-    while (tmp != NULL && i < index)
-    {
-        tmp = tmp->next;
-        i++;
-    }
+	/* Traverse to node at index */
+	while (tmp != NULL && i < index)
+	{
+		tmp = tmp->next;
+		i++;
+	}
 
-    /* If node doesn’t exist */
-    if (tmp == NULL)
-        return (-1);
+	/* If node doesn’t exist */
+	if (tmp == NULL)
+		return (-1);
 
-    /* Adjust links and delete node */
-    if (tmp->next != NULL)
-        tmp->next->prev = tmp->prev;
-    if (tmp->prev != NULL)
-        tmp->prev->next = tmp->next;
+	/* Adjust links and delete node */
+	if (tmp->next != NULL)
+		tmp->next->prev = tmp->prev;
+	if (tmp->prev != NULL)
+		tmp->prev->next = tmp->next;
 
-    free(tmp);
-    return (1);
+	free(tmp);
+	return (1);
 }
