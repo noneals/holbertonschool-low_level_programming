@@ -3,6 +3,50 @@
 #include <string.h>
 
 /**
+ * update_value - Updates the value of an existing node
+ * @node: The node to update
+ * @value: The new value
+ *
+ * Return: 1 on success, 0 on failure
+ */
+int update_value(hash_node_t *node, const char *value)
+{
+	free(node->value);
+	node->value = strdup(value);
+	if (!node->value)
+		return (0);
+	return (1);
+}
+
+/**
+ * create_node - Creates a new hash node
+ * @key: The key for the node
+ * @value: The value for the node
+ *
+ * Return: Pointer to the new node, or NULL on failure
+ */
+hash_node_t *create_node(const char *key, const char *value)
+{
+	hash_node_t *new_node;
+
+	new_node = malloc(sizeof(hash_node_t));
+	if (!new_node)
+		return (NULL);
+
+	new_node->key = strdup(key);
+	new_node->value = strdup(value);
+	if (!new_node->key || !new_node->value)
+	{
+		free(new_node->key);
+		free(new_node->value);
+		free(new_node);
+		return (NULL);
+	}
+	new_node->next = NULL;
+	return (new_node);
+}
+
+/**
  * hash_table_set - Adds an element to the hash table
  * @ht: The hash table
  * @key: The key (cannot be an empty string)
@@ -21,36 +65,20 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 	index = key_index((const unsigned char *)key, ht->size);
 	current = ht->array[index];
 
-	/* Check if key already exists -> update value */
+	/* Update value if key already exists */
 	while (current)
 	{
 		if (strcmp(current->key, key) == 0)
-		{
-			free(current->value);
-			current->value = strdup(value);
-			if (current->value == NULL)
-				return (0);
-			return (1);
-		}
+			return (update_value(current, value));
 		current = current->next;
 	}
 
 	/* Key not found -> create new node */
-	new_node = malloc(sizeof(hash_node_t));
-	if (new_node == NULL)
+	new_node = create_node(key, value);
+	if (!new_node)
 		return (0);
 
-	new_node->key = strdup(key);
-	new_node->value = strdup(value);
-	if (new_node->key == NULL || new_node->value == NULL)
-	{
-		free(new_node->key);
-		free(new_node->value);
-		free(new_node);
-		return (0);
-	}
-
-	/* Collision handling: add new node at beginning of list */
+	/* Insert at beginning of list */
 	new_node->next = ht->array[index];
 	ht->array[index] = new_node;
 
